@@ -1,198 +1,12 @@
-# from pathlib import Path
-# import json
-# import random
-# import string
-# class Bank:
-#     __database = "data.json"
-#     data  = []
-#     try:
-#         if Path(__database).exists():
-#             with open(__database) as fs:
-#                 data = json.load(fs)
-#     except Exception as err:
-#         print(f"Error occured as {err}")
-#     @classmethod
-#     def update_data(cls):
-#         with open(cls.__database,"w") as fs:
-#             json.dump(cls.data,fs)
-#     @classmethod
-#     def generate_account_no(self):
-#         alpha = random.choices(string.ascii_letters,k=4)
-#         digit = random.choices(string.digits,k=8)
-#         id = alpha + digit
-#         random.shuffle(id)
-#         return "".join(id)
-    
-#     def createuser(self):
-#         info = {
-#             "name" : input("Enter your name"),
-#             "email" : input("Enter your email"),
-#             "age" : int(input("Enter your age")),
-#             "phone" : int(input("Enter your phone number")),
-#             "pin" : int(input("Enter your pin")),
-#             "AccountNo." : Bank.generate_account_no(),
-#             "balance" : 0
-#         }
-#         if info["age"] < 18:
-#             print("You are not eligible to open an account")
-#         elif len(str(info["phone"])) != 10 or len(str(info["pin"])) != 4:
-#             print("Invalid input please try later...")
-#             return
-#         else:
-#             print(f"Please keep your account safe,your account number is {info['AccountNo.']}")
-#         Bank.data.append(info)
-#         Bank.update_data()
-#     def Deposit_money(self):
-#         Ac = input("Enter your account number")
-#         pin = int(input("Enter your pin"))
-#         userData = [i for i in Bank.data if i["AccountNo."] == Ac and i["pin"] == pin]
-#         if userData:
-#             amount = int(input("Enter the amount"))
-#             if amount < 0:
-#                 print("Invalid amount")
-#                 return
-#             elif amount > 10000:
-#                 print("Amount is greater than 10,000")
-#                 return
-#             userData[0]["balance"] += amount
-#             Bank.update_data()
-#             print("Money Deposit successful")
-#             return
-#         else:
-#             print("Invalid account number or pin")
-#             return
-#         # for i in Bank.data:
-#         #     if i["AccountNo."] == Ac and i["pin"] == pin:
-#         #         amount = int(input("Enter the amount"))
-#         #         i["balance"] += amount
-#         #         Bank.update_data()
-#         #         return
-#         #     else:
-#         #         print("Invalid account number or pin")
-#         #         return
-#     def Withdraw_money(self):
-#         Ac = input("Enter your account number")
-#         pin = int(input("Enter your pin"))
-#         userData = [i for i in Bank.data if i["AccountNo."] == Ac and i["pin"] == pin]
-#         if userData:
-#             amount = int(input("Enter the amount"))
-#             if amount < 0:
-#                 print("Invalid amount")
-#                 return
-#             elif amount > 10000:
-#                 print("Amount is greater than 10,000")
-#                 return
-#             elif amount > userData[0]["balance"]:
-#                 print("Insufficient balance")
-#                 return
-#             userData[0]["balance"] -= amount
-#             Bank.update_data()
-#             print("Money withdraw successfully")
-#             return
-#         else:
-#             print("Invalid account number or pin")
-#             return
-#     def details(self):
-#         Ac = input("Enter your account number")
-#         pin = int(input("Enter your pin"))
-#         userData = [i for i in Bank.data if i["AccountNo."] == Ac and i["pin"] == pin]
-#         if userData:
-#             user = userData[0]
-#             for i in user:
-#                 print(f"{i} -> {user[i]}")
-#         else:
-#             print("Invalid account number or pin")
-#             return
-#     def update_details(self):
-#         Ac = input("Enter your account number")
-#         pin = int(input("Enter your pin"))
-#         userData = [i for i in Bank.data if i["AccountNo."] == Ac and i["pin"] == pin]
-#         if userData:
-#             print("you cannot change your account number")
-#             print("Now update your details and skip it if you don't want to change")
-#             newData = {
-#                 "name" : input("Enter your name"),
-#                 "email" : input("Enter your email"),
-#                 "age" : input("Enter your age"),
-#                 "phone" : input("Enter your phone number"),
-#                 "pin" : input("Enter your pin")
-#             }
-#             if newData['name'] == "":
-#                 newData['name'] = userData[0]['name']
-#             if newData['email'] == "":
-#                 newData['email'] = userData[0]['email']
-#             if newData['age'] == "":
-#                 newData['age'] = userData[0]['age']
-#             if newData['phone'] == "":
-#                 newData['phone'] = userData[0]['phone']
-#             if newData['pin'] == "":
-#                 newData['pin'] = userData[0]['pin']
-#             newData["AccountNo."] = userData[0]["AccountNo."]
-#             newData["balance"] = userData[0]["balance"]
-#             for i in userData[0]:
-#                 if userData[0][i] == newData[i]:
-#                     continue
-#                 else:
-#                     if newData[i].isnumeric():
-#                         userData[0][i] = int(newData[i])
-#                     else:
-#                         userData[0][i] = newData[i]
-#             # userData[0] = newData
-#             Bank.update_data()
-#             print("Details updated successfully")
-#             return
-#         else:
-#             print("Invalid account number or pin")
-#             return
-        
-#     def delete_user(self):
-#         Ac = input("Enter your account number")
-#         pin = int(input("Enter your pin"))
-#         userData = [i for i in Bank.data if i["AccountNo."] == Ac and i["pin"] == pin]
-#         if userData:
-#            Bank.data.remove(userData[0])
-#            Bank.update_data()
-#            print("Account deleted successfully")
-#         else:
-#             print("Invalid account number or pin")
-#             return
-            
-
-# bank = Bank()
-# check = int(input("""
-#                   press 1 to create an account
-#                   press 2 to deposit
-#                   press 3 to withdraw
-#                   press 4 to view Account details
-#                   press 5 to update details
-#                   press 6 to delete account
-#                   """))
-
-
-# if check == 1:
-#     bank.createuser()
-# elif check == 2:
-#     bank.Deposit_money()
-# elif check == 3:
-#     bank.Withdraw_money()
-# elif check == 4:
-#     bank.details()
-# elif check == 5:
-#     bank.update_details()
-# elif check == 6:
-#     bank.delete_user()    
-
-
-
 import streamlit as st
 from pathlib import Path
 import json
 import random
 import string
-from typing import Optional, Dict, List
+from typing import Optional, List
 
 # -----------------------------
-# Data Layer (Same structure as your original Bank class)
+# Data Layer (Bank Class)
 # -----------------------------
 class Bank:
     __database = "data.json"
@@ -243,7 +57,7 @@ class Bank:
 
 
 # -----------------------------
-# Helpers
+# Helper Functions
 # -----------------------------
 def require_logged_in():
     if not st.session_state.get("auth"):
@@ -257,6 +71,7 @@ def login_block():
         acc_no = st.text_input("Account Number", placeholder="Enter your account number")
         pin_str = st.text_input("PIN", type="password", placeholder="4-digit PIN")
         submit = st.form_submit_button("Login")
+
     if submit:
         if not acc_no or not pin_str.isdigit():
             st.error("Enter a valid account number and numeric PIN.")
@@ -271,13 +86,16 @@ def login_block():
 
 def show_user_summary(user: dict):
     st.write("### Account Summary")
-    st.json({k: user[k] for k in ["name", "email", "age", "phone", "AccountNo.", "balance"] if k in user})
+    st.json({
+        k: user[k]
+        for k in ["name", "email", "age", "phone", "AccountNo.", "balance"]
+        if k in user
+    })
 
 
 # -----------------------------
 # UI Sections
 # -----------------------------
-
 def ui_create_account():
     st.header("Create New Account")
     with st.form("create_form"):
@@ -418,7 +236,6 @@ def ui_update_details():
             "AccountNo.": user["AccountNo."],
             "balance": user["balance"],
         }
-        # Assign back
         user.update(newData)
         Bank.update_data()
         st.success("Details updated successfully.")
@@ -447,11 +264,11 @@ def ui_delete_account():
 
 
 # -----------------------------
-# Main App
+# Sidebar + Main App
 # -----------------------------
-
 def sidebar():
     st.sidebar.title("Bank Portal")
+
     # Login / Logout block
     if st.session_state.get("auth"):
         acc = st.session_state["auth"]["acc"]
@@ -479,9 +296,13 @@ def sidebar():
 
 
 def main():
-    st.set_page_config(page_title="Bank Management", page_icon="🏦", layout="centered")
+    st.set_page_config(
+        page_title="Bank Management",
+        page_icon="🏦",
+        layout="centered"
+    )
     st.title("🏦 Bank Management — Streamlit UI")
-    st.caption("OOP + JSON storage. Compatible with your existing data.json structure.")
+    st.caption("OOP + JSON storage — Web interface for your Bank project.")
 
     page = sidebar()
 
@@ -501,7 +322,6 @@ def main():
         Bank.reload()
         st.success("Reloaded data from disk.")
         if st.session_state.get("auth"):
-            # validate that account still exists
             auth = st.session_state["auth"]
             if not Bank.find_user(auth["acc"], auth["pin"]):
                 st.warning("Your account was not found after reload. Logging out.")
@@ -509,4 +329,6 @@ def main():
 
 
 if __name__ == "__main__":
+    if "auth" not in st.session_state:
+        st.session_state["auth"] = None
     main()
